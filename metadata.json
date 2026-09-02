@@ -1,0 +1,6 @@
+{
+  "name": "MİNİ DOMİNO",
+  "description": "A classic Domino game with tactical AI, scoring, and sound effects.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
