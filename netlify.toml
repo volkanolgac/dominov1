@@ -1,0 +1,22 @@
+# Netlify configuration for Mini Domino Web App
+# This file directs Netlify to deploy the static web app from the "web" folder,
+# keeping the Android codebase completely untouched.
+
+[build]
+  publish = "web"
+
+[[headers]]
+  for = "/*"
+    [headers.values]
+      X-Frame-Options = "SAMEORIGIN"
+      X-Content-Type-Options = "nosniff"
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy-policy.html"
+  status = 301
+
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/privacy-policy.html"
+  status = 200

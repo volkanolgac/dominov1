@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MİNİ DOMİNO</title>
+  <meta name="description" content="Put your intelligence on the table. Classic domino game with tactical AI, 11 languages, and smooth gameplay." />
+  <meta name="theme-color" content="#0B192E" />
+  <link rel="icon" type="image/jpeg" href="assets/domino-logo.jpg" />
+  <link rel="apple-touch-icon" href="assets/domino-logo.jpg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="classic_green">
+  <div class="wood-texture-overlay"></div>
+
+  <div id="app-container">
+    
+    <!-- 1. SPLASH SCREEN -->
+    <div id="splash-screen" class="screen-view active">
+      <div class="splash-logo-box">
+        <img src="assets/domino-logo.jpg" alt="Mini Domino Logo" />
+      </div>
+      <h1 class="splash-title" data-i18n="app_name">MİNİ DOMİNO</h1>
+      <p class="splash-tagline" data-i18n="tagline">Zekânı masaya koy.</p>
+      <div class="splash-loader"></div>
+    </div>
+
+    <!-- 2. MAIN MENU SCREEN -->
+    <div id="main-menu-screen" class="screen-view">
+      <div class="menu-top-bar">
+        <div class="player-chip">
+          <span class="avatar">👤</span>
+          <span id="menu-player-name">Oyuncu</span>
+        </div>
+        <div class="menu-actions-top">
+          <button id="btn-quick-sound" class="icon-btn" title="Sound">🔊</button>
+          <button id="btn-open-settings" class="icon-btn" title="Settings">⚙️</button>
+        </div>
+      </div>
+
+      <div class="menu-hero">
+        <div class="menu-logo-box">
+          <img src="assets/domino-logo.jpg" alt="Mini Domino Mascot" />
+        </div>
+        <h1 class="app-title-text" data-i18n="app_name">MİNİ DOMİNO</h1>
+        <p class="app-tagline-text" data-i18n="tagline">Zekânı masaya koy.</p>
+      </div>
+
+      <div class="menu-buttons-list">
+        <button id="btn-play" class="btn-primary-3d">
+          <span>🎮</span> <span data-i18n="play">Oyna</span>
+        </button>
+        <button id="btn-how-to-play" class="btn-secondary-3d">
+          <span>📖</span> <span data-i18n="how_to_play">Nasıl Oynanır</span>
+        </button>
+        <button id="btn-settings" class="btn-outline-3d">
+          <span>⚙️</span> <span data-i18n="settings">Ayarlar</span>
+        </button>
+      </div>
+
+      <!-- Stats Card -->
+      <div class="stats-card">
+        <div class="stats-card-title">
+          <span>📊</span> <span data-i18n="stats">İstatistikler</span>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div id="stat-matches" class="stat-value">0</div>
+            <div class="stat-label" data-i18n="matches">Maçlar</div>
+          </div>
+          <div class="stat-box">
+            <div id="stat-wins" class="stat-value green">0</div>
+            <div class="stat-label" data-i18n="wins">Galibiyet</div>
+          </div>
+          <div class="stat-box">
+            <div id="stat-losses" class="stat-value red">0</div>
+            <div class="stat-label" data-i18n="losses">Mağlubiyet</div>
+          </div>
+          <div class="stat-box" style="grid-column: span 1.5;">
+            <div id="stat-win-rate" class="stat-value gold">0%</div>
+            <div class="stat-label" data-i18n="win_rate">Kazanma Oranı</div>
+          </div>
+          <div class="stat-box" style="grid-column: span 1.5;">
+            <div id="stat-best-score" class="stat-value">0</div>
+            <div class="stat-label" data-i18n="best_score">En Yüksek Skor</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <a href="privacy-policy.html" target="_blank" data-i18n="privacy_policy">Gizlilik Politikası</a>
+        <span>•</span>
+        <span>v5.0 Web</span>
+      </div>
+    </div>
+
+    <!-- 3. MATCHMAKING OVERLAY -->
+    <div id="matchmaking-overlay">
+      <h2 id="mm-status" class="mm-status-text" data-i18n="finding_opponent">Rakip Bulunuyor...</h2>
+      <div class="mm-vs-box">
+        <div class="mm-player-card">
+          <div class="mm-avatar">👤</div>
+          <div id="mm-player-name" class="mm-player-name">Sen</div>
+        </div>
+        <div class="mm-vs-badge">VS</div>
+        <div class="mm-player-card">
+          <div id="mm-opponent-avatar" class="mm-avatar">🤖</div>
+          <div id="mm-opponent-name" class="mm-player-name">Rakip</div>
+        </div>
+      </div>
+      <div class="splash-loader"></div>
+    </div>
+
+    <!-- 4. GAME SCREEN -->
+    <div id="game-screen" class="screen-view">
+      <!-- Top Info Bar -->
+      <div class="game-top-bar">
+        <div class="game-player-info">
+          <div class="game-avatar-small">👤</div>
+          <div>
+            <div id="game-player-name" style="font-size: 13px; font-weight: 700;">Sen</div>
+            <div id="game-player-score" class="game-score-badge">0</div>
+          </div>
+        </div>
+
+        <div class="game-center-meta">
+          <div id="game-round-badge" class="game-round-badge">TUR 1</div>
+          <div class="game-boneyard-pool" title="Havuz">
+            <span>🦴</span> <span id="game-pool-count">14</span>
+          </div>
+        </div>
+
+        <div class="game-player-info" style="flex-direction: row-reverse; text-align: right;">
+          <div id="game-opp-avatar" class="game-avatar-small">🤖</div>
+          <div>
+            <div id="game-opp-name" style="font-size: 13px; font-weight: 700;">Rakip</div>
+            <div id="game-opp-score" class="game-score-badge">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opponent Hand (Tiles Back) -->
+      <div id="opponent-hand" class="opponent-hand-container"></div>
+
+      <!-- Board Table Area -->
+      <div class="table-container" id="board-container">
+        <!-- Floating Choice Dialog for Left/Right placement -->
+        <div id="side-chooser-banner" class="side-chooser-banner" style="display: none;">
+          <span data-i18n="hint_choose_side">Hangi uca koyulsun?</span>
+          <button id="btn-choose-left" class="side-btn">SOL</button>
+          <button id="btn-choose-right" class="side-btn">SAĞ</button>
+        </div>
+
+        <div id="board-empty-hint" class="board-empty-hint">
+          Masa boş.<br>İlk hamle bekleniyor...
+        </div>
+        <div id="board-track" class="board-track"></div>
+      </div>
+
+      <!-- Turn & Realtime Hint Status -->
+      <div class="turn-hint-bar">
+        <div id="turn-badge" class="turn-badge">
+          <span id="turn-dot">🟢</span>
+          <span id="turn-text" data-i18n="your_turn">Sıra Sende</span>
+        </div>
+        <div id="hint-text" style="font-size: 12px;">Taş seç</div>
+      </div>
+
+      <!-- Player Hand (Face Up Interactive Tiles) -->
+      <div id="player-hand" class="player-hand-container"></div>
+
+      <!-- Bottom Control Actions -->
+      <div class="game-bottom-bar">
+        <button id="btn-game-draw" class="game-btn game-btn-draw" disabled>
+          <span>🦴</span> <span data-i18n="draw">Çek</span>
+        </button>
+        <button id="btn-game-pass" class="game-btn game-btn-pass" disabled>
+          <span>⏭️</span> <span data-i18n="pass">Pas</span>
+        </button>
+        <button id="btn-game-menu" class="game-btn game-btn-menu">
+          <span data-i18n="menu">Menü</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 5. ROUND / MATCH OVER MODAL -->
+    <div id="round-over-modal" class="modal-overlay">
+      <div class="modal-card">
+        <div id="modal-result-icon" class="modal-icon-badge">🏆</div>
+        <h2 id="modal-result-title" class="modal-title" data-i18n="you_win">Kazandın!</h2>
+        <p id="modal-result-reason" class="modal-desc">Tüm taşlarını bitirdin.</p>
+        
+        <div id="modal-points-badge" class="modal-points-badge">+24 Puan</div>
+
+        <div class="modal-scores-row">
+          <div>
+            <div style="font-size: 12px; color: var(--text-muted);" id="modal-p1-label">Sen</div>
+            <div id="modal-p1-score" style="font-size: 24px; font-weight: 900; color: var(--gold-primary);">0</div>
+          </div>
+          <div style="font-size: 20px; font-weight: 800; align-self: center;">:</div>
+          <div>
+            <div style="font-size: 12px; color: var(--text-muted);" id="modal-p2-label">Rakip</div>
+            <div id="modal-p2-score" style="font-size: 24px; font-weight: 900; color: #FFF;">0</div>
+          </div>
+        </div>
+
+        <div class="modal-buttons">
+          <button id="btn-modal-next-round" class="btn-primary-3d">
+            <span data-i18n="next_round">SONRAKİ TUR</span>
+          </button>
+          <button id="btn-modal-menu" class="btn-outline-3d">
+            <span data-i18n="main_menu">Ana Menü</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. HOW TO PLAY SCREEN -->
+    <div id="how-to-play-screen" class="screen-view">
+      <div class="screen-header">
+        <button id="btn-back-how-to-play" class="icon-btn">←</button>
+        <h2 class="header-title" data-i18n="how_to_play">Nasıl Oynanır</h2>
+        <div style="width: 44px;"></div>
+      </div>
+
+      <div class="rules-list">
+        <div class="rule-item">
+          <div class="rule-title" data-i18n="rule_1_title">1. Amaç</div>
+          <div class="rule-desc" data-i18n="rule_1_text">Benzer taşları bağla ve rakibinden önce 100 puana ulaş.</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-title" data-i18n="rule_2_title">2. Başlangıç</div>
+          <div class="rule-desc" data-i18n="rule_2_text">Her oyuncu 7 taşla başlar. En büyük çift taşa sahip olan başlar.</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-title" data-i18n="rule_3_title">3. Oynanış</div>
+          <div class="rule-desc" data-i18n="rule_3_text">Taşlar, birbirine temas eden uçlar aynı sayıda nokta içerecek şekilde dizilir.</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-title" data-i18n="rule_4_title">4. Taş Çekme</div>
+          <div class="rule-desc" data-i18n="rule_4_text">Oynayacak taşın yoksa oynayabilir bir taş bulana kadar havuzdan çekersin.</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-title" data-i18n="rule_5_title">5. Tur Sonu</div>
+          <div class="rule-desc" data-i18n="rule_5_text">Bir oyuncu taşlarını bitirdiğinde veya oyun kilitlendiğinde tur biter.</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-title" data-i18n="rule_6_title">6. Puanlama</div>
+          <div class="rule-desc" data-i18n="rule_6_text">Kazanan oyuncu, rakibin elinde kalan taşların toplam puanını alır. İlk 100 puana ulaşan maçı kazanır.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. SETTINGS SCREEN -->
+    <div id="settings-screen" class="screen-view">
+      <div class="screen-header">
+        <button id="btn-back-settings" class="icon-btn">←</button>
+        <h2 class="header-title" data-i18n="settings">Ayarlar</h2>
+        <div style="width: 44px;"></div>
+      </div>
+
+      <!-- Profile -->
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span>👤</span> <span data-i18n="profile">Profil</span>
+        </div>
+        <div class="settings-row">
+          <span data-i18n="player_name">Oyuncu Adı</span>
+          <input type="text" id="setting-name-input" class="settings-input" maxlength="15" />
+        </div>
+      </div>
+
+      <!-- Themes -->
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span>🎨</span> <span data-i18n="themes">Temalar</span>
+        </div>
+        <div class="chips-grid" id="theme-chips-container">
+          <button class="chip-btn active" data-theme="classic_green">Yeşil Çuha</button>
+          <button class="chip-btn" data-theme="navy_night">Gece Mavisi</button>
+          <button class="chip-btn" data-theme="royal_burgundy">Bordo</button>
+          <button class="chip-btn" data-theme="obsidian_black">Obsidiyen</button>
+          <button class="chip-btn" data-theme="classic_wood">Ahşap</button>
+          <button class="chip-btn" data-theme="pink_blossom">Pembe</button>
+        </div>
+      </div>
+
+      <!-- Game Options -->
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span>🎮</span> <span data-i18n="game_settings">Oyun</span>
+        </div>
+        <div class="settings-row">
+          <span data-i18n="sound_effects">Ses Efektleri</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="setting-sound-toggle" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Languages -->
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span>🌍</span> <span data-i18n="language">DİL</span>
+        </div>
+        <div class="chips-grid" id="lang-chips-container">
+          <button class="chip-btn" data-lang="tr">🇹🇷 Türkçe</button>
+          <button class="chip-btn" data-lang="en">🇬🇧 English</button>
+          <button class="chip-btn" data-lang="de">🇩🇪 Deutsch</button>
+          <button class="chip-btn" data-lang="fr">🇫🇷 Français</button>
+          <button class="chip-btn" data-lang="es">🇪🇸 Español</button>
+          <button class="chip-btn" data-lang="it">🇮🇹 Italiano</button>
+          <button class="chip-btn" data-lang="ru">🇷🇺 Русский</button>
+          <button class="chip-btn" data-lang="ja">🇯🇵 日本語</button>
+          <button class="chip-btn" data-lang="zh">🇨🇳 中文</button>
+          <button class="chip-btn" data-lang="hi">🇮🇳 हिन्दी</button>
+          <button class="chip-btn" data-lang="ar">🇸🇦 العربية</button>
+        </div>
+      </div>
+
+      <!-- Reset Stats -->
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span>⚠️</span> <span data-i18n="stats">İstatistikler</span>
+        </div>
+        <button id="btn-reset-stats" class="btn-outline-3d" style="color: #F87171; border-color: rgba(248, 113, 113, 0.4);">
+          <span data-i18n="reset_stats">İstatistikleri Sıfırla</span>
+        </button>
+      </div>
+
+      <div style="text-align: center; margin-top: 16px;">
+        <a href="privacy-policy.html" target="_blank" style="color: var(--text-muted); font-size: 13px;">Gizlilik Politikası</a>
+      </div>
+    </div>
+
+    <!-- 8. QUIT CONFIRM MODAL -->
+    <div id="quit-confirm-modal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-icon-badge">🚪</div>
+        <h2 class="modal-title" data-i18n="quit_game">Oyundan Çık?</h2>
+        <p class="modal-desc" data-i18n="quit_game_confirm">Mevcut oyunu bırakmak istediğinize emin misiniz?</p>
+        <div class="modal-buttons" style="flex-direction: row;">
+          <button id="btn-quit-yes" class="btn-primary-3d" style="flex: 1;" data-i18n="yes">EVET</button>
+          <button id="btn-quit-no" class="btn-outline-3d" style="flex: 1;" data-i18n="no">HAYIR</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="translations.js"></script>
+  <script src="engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
