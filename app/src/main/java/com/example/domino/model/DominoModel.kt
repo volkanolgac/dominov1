@@ -93,6 +93,7 @@ data class Stats(
 }
 
 enum class AppScreen {
+    SPLASH,
     MAIN_MENU,
     GAME,
     HOW_TO_PLAY,

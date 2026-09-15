@@ -34,6 +34,7 @@ import com.example.domino.ui.screens.GameScreen
 import com.example.domino.ui.screens.HowToPlayScreen
 import com.example.domino.ui.screens.MainMenuScreen
 import com.example.domino.ui.screens.SettingsScreen
+import com.example.domino.ui.screens.SplashScreen
 import com.example.domino.ui.theme.DominoTheme
 import com.example.domino.viewmodel.DominoViewModel
 
@@ -140,6 +141,14 @@ fun DominoApp(
     }
 
     when (state.currentScreen) {
+        AppScreen.SPLASH -> {
+            SplashScreen(
+                languageId = state.settings.languageId,
+                themeId = state.settings.themeId,
+                onFinish = { viewModel.navigateTo(AppScreen.MAIN_MENU) },
+                modifier = modifier
+            )
+        }
         AppScreen.MAIN_MENU -> {
             MainMenuScreen(
                 stats = state.stats,

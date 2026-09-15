@@ -1,5 +1,6 @@
 package com.example.domino.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,12 +26,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.domino.R
 import com.example.domino.model.Stats
 import com.example.domino.model.Translations
 import com.example.domino.ui.components.DominoTileView
@@ -84,29 +90,40 @@ fun MainMenuScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .border(
+                                width = 1.5.dp,
+                                brush = Brush.linearGradient(
+                                    listOf(Color(0xFFFFD700), Color(0xFF38BDF8))
+                                ),
+                                shape = RoundedCornerShape(20.dp)
+                            )
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.img_domino_icon_1788352239314),
+                            contentDescription = Translations.getString("app_name", languageId),
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
                     Text(
                         text = Translations.getString("app_name", languageId),
                         color = MaterialTheme.colorScheme.primary,
-                        fontSize = 32.sp,
+                        fontSize = 28.sp,
                         fontWeight = FontWeight.Black,
-                        letterSpacing = 4.sp
+                        letterSpacing = 3.sp
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(2.dp))
                     Text(
                         text = Translations.getString("tagline", languageId),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontSize = 14.sp,
-                        letterSpacing = 2.sp
+                        fontSize = 13.sp,
+                        letterSpacing = 1.5.sp
                     )
-                    Spacer(modifier = Modifier.height(24.dp))
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        DominoTileView(a = 6, b = 6, tileSize = TileSize.SMALL)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        DominoTileView(a = 3, b = 5, tileSize = TileSize.SMALL)
-                    }
                 }
 
                 Column(
@@ -153,23 +170,32 @@ fun MainMenuScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(horizontal = 24.dp, vertical = 36.dp),
+                    .padding(horizontal = 24.dp, vertical = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                // Hero Tiles Showcase
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                // Hero App Icon Showcase
+                Box(
+                    modifier = Modifier
+                        .size(120.dp)
+                        .clip(RoundedCornerShape(24.dp))
+                        .border(
+                            width = 2.dp,
+                            brush = Brush.linearGradient(
+                                listOf(Color(0xFFFFD700), Color(0xFF38BDF8), Color(0xFF1E40AF))
+                            ),
+                            shape = RoundedCornerShape(24.dp)
+                        )
                 ) {
-                    DominoTileView(a = 6, b = 6, tileSize = TileSize.SMALL)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    DominoTileView(a = 3, b = 5, tileSize = TileSize.SMALL)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    DominoTileView(a = 0, b = 4, tileSize = TileSize.SMALL)
+                    Image(
+                        painter = painterResource(id = R.drawable.img_domino_icon_1788352239314),
+                        contentDescription = Translations.getString("app_name", languageId),
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
                 }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 // Title Header
                 Text(
@@ -187,7 +213,7 @@ fun MainMenuScreen(
                     letterSpacing = 2.sp
                 )
 
-                Spacer(modifier = Modifier.height(36.dp))
+                Spacer(modifier = Modifier.height(28.dp))
 
                 // Action Buttons
                 Column(

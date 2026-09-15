@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 data class GameUiState(
-    val currentScreen: AppScreen = AppScreen.MAIN_MENU,
+    val currentScreen: AppScreen = AppScreen.SPLASH,
     val board: List<PlacedTile> = emptyList(),
     val pool: List<Tile> = emptyList(),
     val humanHand: List<Tile> = emptyList(),
